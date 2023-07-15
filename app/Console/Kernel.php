@@ -25,6 +25,6 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        $schedule->command(DeviceMonitoringCommand::class)->everyMinute();
+        $schedule->command(DeviceMonitoringCommand::class)->everyTwoMinutes();
     }
 }
