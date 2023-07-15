@@ -1,0 +1,35 @@
+{
+    "listeners": {
+        "*:80": {
+            "pass": "routes"
+        }
+    },
+    "routes": [
+        {
+            "match": {
+                "uri": "!/index.php"
+            },
+            "action": {
+                "share": "/var/www/public$uri",
+                "fallback": {
+                    "pass": "applications/php"
+                }
+            }
+        }
+    ],
+    "applications": {
+        "php": {
+            "type": "php",
+            "user": "www-data",
+            "group": "www-data",
+            "processes": {
+                "max": 3,
+                "spare": 2,
+                "idle_timeout": 30
+            },
+            "root": "/var/www/public",
+            "script": "index.php"
+        }
+    },
+    "access_log": "/dev/stdout"
+}

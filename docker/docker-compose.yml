@@ -1,0 +1,27 @@
+version: '3'
+services:
+  nginx-unit:
+    build: ./unit
+    working_dir: /var/www/
+    ports:
+      - "80:80"
+    volumes:
+      - ./unit/config.json:/docker-entrypoint.d/config.json
+      - ./../.:/var/www
+
+  postgres:
+    image: arm64v8/postgres:14.5-alpine
+    environment:
+      POSTGRES_DB: "yandex-smart-home"
+      POSTGRES_USER: "yandex-smart-home"
+      POSTGRES_PASSWORD: "secret"
+    ports:
+      - "5432:5432"
+
+  redis:
+    image: arm64v8/redis:alpine
+    command: redis-server --appendonly yes
+    volumes:
+      - ./data/redis:/data
+    ports:
+      - "8002:6379"
